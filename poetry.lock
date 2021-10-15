@@ -555,6 +555,22 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "lightgbm"
+version = "3.3.0"
+description = "LightGBM Python Package"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = "*"
+scikit-learn = "!=0.22.0"
+scipy = "*"
+
+[package.extras]
+dask = ["dask[array] (>=2.0.0)", "dask[dataframe] (>=2.0.0)", "dask[distributed] (>=2.0.0)", "pandas"]
+
+[[package]]
 name = "loguru"
 version = "0.5.3"
 description = "Python logging made (stupidly) simple"
@@ -1486,7 +1502,7 @@ dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2cf4c14bc73603a53e6d880988e7b6330613fb5f8bbf154c56a6505e74b14810"
+content-hash = "6191c24b3e3b385d0a68bc8a74173d491e391912ffdf12f0ba9a933213b31801"
 
 [metadata.files]
 appnope = [
@@ -1805,6 +1821,13 @@ kiwisolver = [
     {file = "kiwisolver-1.3.2-pp37-pypy37_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:25405f88a37c5f5bcba01c6e350086d65e7465fd1caaf986333d2a045045a223"},
     {file = "kiwisolver-1.3.2-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:bcadb05c3d4794eb9eee1dddf1c24215c92fb7b55a80beae7a60530a91060560"},
     {file = "kiwisolver-1.3.2.tar.gz", hash = "sha256:fc4453705b81d03568d5b808ad8f09c77c47534f6ac2e72e733f9ca4714aa75c"},
+]
+lightgbm = [
+    {file = "lightgbm-3.3.0-py3-none-macosx_10_14_x86_64.macosx_10_15_x86_64.macosx_11_0_x86_64.whl", hash = "sha256:e528550c8d70dd11c6a4eeeeab6753227061184057dca45d68a9d7ccc3f8236e"},
+    {file = "lightgbm-3.3.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:230e5c06032f7ba275ee1eca616b5350742ef6a00c04ebfc81b516a89bc96119"},
+    {file = "lightgbm-3.3.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:09294b50d590a69025e79f9e94470ffcd60f8a86a6223e4a723ea36124f6e14e"},
+    {file = "lightgbm-3.3.0-py3-none-win_amd64.whl", hash = "sha256:8a746aff15828a685ba1eefd1b8bbc8996acef902232f1d6fea87b378b653092"},
+    {file = "lightgbm-3.3.0.tar.gz", hash = "sha256:107ae7babbbda2c2f0e07484f0c53cdeb455e9219235f79dc4e1685d7541e505"},
 ]
 loguru = [
     {file = "loguru-0.5.3-py3-none-any.whl", hash = "sha256:f8087ac396b5ee5f67c963b495d615ebbceac2796379599820e324419d53667c"},
