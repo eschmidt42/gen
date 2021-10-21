@@ -22,6 +22,6 @@ To get started first clone the github repo and then cd into it. In the following
 
 ## TODOS
 
-* implement VAE model that works over toy data
+* add demonstrations where AEs don't work (slightly off input sample space) to highlight the need for VAEs
 * test usefulness of generative models to create useful features, e.g. for tabular kaggle data
 * add sensible tests for generative models that can be used for `unittest`
