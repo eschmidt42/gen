@@ -4,32 +4,73 @@ from torch import nn, Tensor
 import torch.nn.functional as F
 
 
+def get_encoder_model(n_in: int, n_h: int, p: float, n_z: int):
+    """
+    `n_in`: input units
+    `n_h`: hidden units
+    `p`: drop out chance
+    `n_z`: latent units
+    """
+    model = nn.Sequential(
+        nn.Linear(n_in, n_h),
+        nn.BatchNorm1d(n_h),
+        nn.Dropout(p),
+        nn.ReLU(),
+        nn.Linear(n_h, n_z),
+    )
+    utils.logger.info(
+        f"Generating encoder model using {n_in=}, {n_h=}, {n_z=} and {p=}: \n{model}"
+    )
+    return model
+
+
+def get_decoder_model(n_in: int, n_h: int, p: float, n_z: int):
+    """
+    `n_in`: input units
+    `n_h`: hidden units
+    `p`: drop out chance
+    `n_z`: latent units
+    """
+    model = nn.Sequential(
+        nn.Linear(n_z, n_h),
+        nn.BatchNorm1d(n_h),
+        nn.Dropout(p),
+        nn.ReLU(),
+        nn.Linear(n_h, n_in),
+        nn.BatchNorm1d(n_in),
+    )
+    utils.logger.info(
+        f"Generating encoder model using {n_in=}, {n_h=}, {n_z=} and {p=}: \n{model}"
+    )
+    return model
+
+
 class AE(nn.Module):
     """Auto Encoder
 
     Completely from thin air.
     """
 
-    def __init__(self, n_in: int, n_h: int = 50, n_z: int = 10, p: float = 0.01):
+    def __init__(
+        self,
+        n_in: int,
+        n_h: int = 50,
+        n_z: int = 10,
+        p: float = 0.01,
+        encoder_model: nn.Module = None,
+        decoder_model: nn.Module = None,
+    ):
         super().__init__()
-        utils.logger.info(f"n_in {n_in}, n_h {n_h}, n_z {n_z}")
-        self.in_layer = nn.Linear(n_in, n_h)
 
-        self.encoder = nn.Sequential(
-            self.in_layer,
-            nn.BatchNorm1d(n_h),
-            nn.Dropout(p),
-            nn.ReLU(),
-            nn.Linear(n_h, n_z),
-        )  #  self.mean_layer
-
-        self.decoder = nn.Sequential(
-            nn.Linear(n_z, n_h),
-            nn.BatchNorm1d(n_h),
-            nn.Dropout(p),
-            nn.ReLU(),
-            nn.Linear(n_h, n_in),
-            nn.BatchNorm1d(n_in),
+        self.encoder = (
+            get_encoder_model(n_in, n_h, p, n_z)
+            if encoder_model is None
+            else encoder_model
+        )
+        self.decoder = (
+            get_decoder_model(n_in, n_h, p, n_z)
+            if decoder_model is None
+            else decoder_model
         )
 
     def decode(self, z):
