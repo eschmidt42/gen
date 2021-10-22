@@ -23,8 +23,9 @@ data_set = st.sidebar.radio(
     ],
 )
 n_data = st.sidebar.number_input("Number of samples", value=4_200, min_value=100)
+n_bs = st.sidebar.number_input("Minibatchsize", min_value=10, value=264)
 n_epochs = st.sidebar.number_input("Number of epochs", value=10, min_value=1)
-kld_weight = st.sidebar.number_input("KLD weight", value=0.001, min_value=0.0)
+kld_weight = st.sidebar.number_input("KLD weight", value=n_bs / n_data, min_value=0.0)
 p_drop = st.sidebar.number_input(
     "Dropout chance", value=0.01, min_value=0.0001, max_value=0.99
 )
@@ -37,7 +38,7 @@ model_name_map = {
 }
 
 
-def run_stuff(model_type, data_set, n, epochs, kld_weight, p):
+def run_stuff(model_type, data_set, n, bs, epochs, kld_weight, p):
     assert model_type in ["VAE", "AE"]
     # generating data
     n = int(n)
@@ -65,13 +66,12 @@ def run_stuff(model_type, data_set, n, epochs, kld_weight, p):
         splits=splits,
     )
 
-    bs = 256
-    dls = to.dataloaders(bs=bs)
+    dls = to.dataloaders(bs=n_bs)
 
     # setting up the model
     if model_type == "VAE":
         model = vae.VAE(n_in=len(original_features), n_h=200, n_z=2, p=p)
-        loss_func = vae.VAE_Loss(kld_weight=kld_weight)  # bs
+        loss_func = vae.VAE_Loss(kld_weight=kld_weight)
     else:
         model = ae.AE(n_in=len(original_features), n_h=200, n_z=2, p=p)
         loss_func = ae.AE_Loss()
@@ -117,4 +117,4 @@ def run_stuff(model_type, data_set, n, epochs, kld_weight, p):
 
 
 if __name__ == "__main__":
-    run_stuff(model_type, data_set, n_data, n_epochs, kld_weight, p_drop)
+    run_stuff(model_type, data_set, n_data, n_bs, n_epochs, kld_weight, p_drop)

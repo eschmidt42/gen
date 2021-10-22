@@ -78,7 +78,7 @@ class VAE_Loss:
     """
 
     def __init__(self, kld_weight: float = 1.0):
-        self.kld_weight = kld_weight  # importance of the Kullback-Leibler Loss - may be the batchsize or something else
+        self.kld_weight = kld_weight  # importance of the Kullback-Leibler Loss => M/N (minibatch size divided by training set size, see eq. 8 in Kingma et al 2014)
 
     def loss(self, reconstructions, originals, mu, logvar) -> dict:
         reconstruction_loss = F.mse_loss(reconstructions, originals)
