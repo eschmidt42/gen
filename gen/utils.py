@@ -36,10 +36,10 @@ def check_identifiability_of_generated_data(
 
     fig, ax = plt.subplots()
     ax.scatter(df_ori["x_0"], df_ori["x_1"], alpha=0.1, label="original")
-    ax.scatter(df_rec["x_0"], df_rec["x_1"], alpha=0.1, label="VAE")
+    ax.scatter(df_rec["x_0"], df_rec["x_1"], alpha=0.1, label="model")
     ax.set(title="Original and reconstructed as returned by the model")
     ax.legend()
-    plt.show()
+    # plt.show()
 
     df_vae = pd.concat(
         (
@@ -56,10 +56,10 @@ def check_identifiability_of_generated_data(
     dis_model.fit(
         df_vae.iloc[dis_splits[0]][original_features], df_vae.iloc[dis_splits[0]]["set"]
     )
-
-    print(
-        metrics.classification_report(
-            df_vae.iloc[dis_splits[1]]["set"],
-            dis_model.predict(df_vae.iloc[dis_splits[1]][original_features]),
-        )
+    report = metrics.classification_report(
+        df_vae.iloc[dis_splits[1]]["set"],
+        dis_model.predict(df_vae.iloc[dis_splits[1]][original_features]),
+        output_dict=True,
     )
+
+    return fig, report
