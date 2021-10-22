@@ -20,6 +20,15 @@ To get started first clone the github repo and then cd into it. In the following
 
 `poetry run jupyter notebook --no-browser --port 8888`: starts a jupyter notebook server
 
+## How to use
+
+Via _jupyter_:
+* `vae.ipynb` to play with VAE
+* `ae.ipynb` to play with AE
+
+Via _streamlit_:
+* run `poetry run streamlit run app.py` and open `localhost:8501` in your browser to interact with both models and toy with configs
+
 ## TODOS
 
 * add demonstrations where AEs don't work (slightly off input sample space) to highlight the need for VAEs
