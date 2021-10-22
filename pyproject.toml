@@ -17,6 +17,7 @@ scikit-learn = "^1.0"
 jupyter = "^1.0.0"
 black = "^21.9b0"
 pre-commit = "^2.15.0"
+streamlit = "^1.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
